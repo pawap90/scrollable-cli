@@ -10,10 +10,13 @@ export type ScrollBoxOptions = {
 export class ScrollBox {
     private lines: string[] = [];
     private currentLine = 0;
-    private options: ScrollBoxOptions;
+    private _options: ScrollBoxOptions;
+    get options(): ScrollBoxOptions {
+        return this._options;
+    }
 
     constructor(options?: Partial<ScrollBoxOptions>) {
-        this.options = {
+        this._options = {
             content: options?.content,
             start: {
                 x: options?.start?.x ?? 0,
@@ -32,33 +35,33 @@ export class ScrollBox {
     }
 
     setContent(content: string): this {
-        this.options.content = content;
+        this._options.content = content;
         this.resetLines();
         return this;
     }
 
     setStart(start: { x: number; y: number }): this {
-        this.options.start = start;
+        this._options.start = start;
         this.resetLines();
         return this;
     }
 
     setContainer(container: { width: number; height: number }): this {
-        this.options.container = container;
+        this._options.container = container;
         this.resetLines();
         return this;
     }
 
     setWrapOptions(wrapOptions: WrapOptions): this {
-        this.options.wrapOptions = wrapOptions;
+        this._options.wrapOptions = wrapOptions;
         this.resetLines();
         return this;
     }
 
     print(): this {
         if (this.lines.length == 0) this.splitContentIntoLines();
-        const { x, y } = this.options.start;
-        const { height } = this.options.container;
+        const { x, y } = this._options.start;
+        const { height } = this._options.container;
 
         process.stdout.cursorTo(0, y);
         for (let i = 0; i < height - 1; i++) {
@@ -86,12 +89,12 @@ export class ScrollBox {
     }
 
     private splitContentIntoLines(): void {
-        if (!this.options.content) return;
+        if (!this._options.content) return;
 
         const wrapped = wrapAnsi(
-            this.options.content,
-            this.options.container.width,
-            this.options.wrapOptions
+            this._options.content,
+            this._options.container.width,
+            this._options.wrapOptions
         );
         this.lines = wrapped.split('\n');
     }
