@@ -1,32 +1,32 @@
 import wrapAnsi, { type Options as WrapOptions } from 'wrap-ansi';
 
-type ScrollOptions = {
+export type ScrollBoxOptions = {
     content?: string;
     start: { x: number; y: number };
     container: { width: number; height: number };
     wrapOptions: WrapOptions;
 };
 
-export class Scroll {
+export class ScrollBox {
     private lines: string[] = [];
     private currentLine = 0;
-    private options: ScrollOptions;
+    private options: ScrollBoxOptions;
 
-    constructor(options: Partial<ScrollOptions>) {
+    constructor(options?: Partial<ScrollBoxOptions>) {
         this.options = {
-            content: options.content,
+            content: options?.content,
             start: {
-                x: options.start?.x ?? 0,
-                y: options.start?.y ?? 0
+                x: options?.start?.x ?? 0,
+                y: options?.start?.y ?? 0
             },
             container: {
-                width: options.container?.width ?? process.stdout.columns,
-                height: options.container?.height ?? process.stdout.rows
+                width: options?.container?.width ?? process.stdout.columns,
+                height: options?.container?.height ?? process.stdout.rows
             },
             wrapOptions: {
-                hard: options.wrapOptions?.hard ?? true,
-                wordWrap: options.wrapOptions?.wordWrap ?? true,
-                trim: options.wrapOptions?.trim ?? false
+                hard: options?.wrapOptions?.hard ?? true,
+                wordWrap: options?.wrapOptions?.wordWrap ?? true,
+                trim: options?.wrapOptions?.trim ?? false
             }
         };
     }
