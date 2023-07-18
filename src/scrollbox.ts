@@ -1,4 +1,5 @@
-import wrapAnsi, { type Options as WrapOptions } from 'wrap-ansi';
+import { type Options as WrapOptions } from 'wrap-ansi';
+import wrapAnsi from 'wrap-ansi';
 
 export type ScrollBoxOptions = {
     content?: string;
@@ -27,9 +28,9 @@ export class ScrollBox {
                 height: options?.container?.height ?? process.stdout.rows
             },
             wrapOptions: {
-                hard: options?.wrapOptions?.hard ?? true,
+                hard: options?.wrapOptions?.hard ?? false,
                 wordWrap: options?.wrapOptions?.wordWrap ?? true,
-                trim: options?.wrapOptions?.trim ?? false
+                trim: options?.wrapOptions?.trim ?? true
             }
         };
     }
@@ -63,23 +64,25 @@ export class ScrollBox {
         const { x, y } = this._options.start;
         const { height } = this._options.container;
 
-        process.stdout.cursorTo(0, y);
+        process.stdout.cursorTo(x, y);
         for (let i = 0; i < height - 1; i++) {
             const line = this.lines[i + this.currentLine];
-            process.stdout.clearLine(0);
-            if (i < this.lines.length && line != undefined) console.log(line);
-            else process.stdout.cursorTo(x, y + i);
+            process.stdout.cursorTo(x);
+            this.printLine(line);
         }
 
         return this;
     }
 
     scroll(lines: number): this {
-        if (this.currentLine + lines < 0) this.currentLine = 0;
-        else if (this.currentLine + lines > this.lines.length - 1)
-            this.currentLine = this.lines.length - 1;
-
         this.currentLine += lines;
+
+        if (this.currentLine < 0) {
+            this.currentLine = 0;
+        } else if (this.currentLine > this.lines.length - 1) {
+            this.currentLine = this.lines.length - 1;
+        }
+
         return this;
     }
 
@@ -97,5 +100,10 @@ export class ScrollBox {
             this._options.wrapOptions
         );
         this.lines = wrapped.split('\n');
+    }
+
+    private printLine(line?: string): void {
+        if (line == undefined) console.log(Array(this._options.container.width).fill(' ').join(''));
+        else console.log(line.padEnd(this._options.container.width, ' '));
     }
 }
