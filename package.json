@@ -4,13 +4,14 @@
     "description": "Terminal string scrolling with ANSI wordwrap support",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
-    "scripts": {
-        "build": "tsc",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
     "files": [
         "dist/**/*"
     ],
+    "scripts": {
+        "build": "tsc",
+        "pretest": "tsc -p tests",
+        "test": "mocha"
+    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/pawap90/cli-scroll.git"
@@ -23,10 +24,16 @@
     },
     "homepage": "https://github.com/pawap90/cli-scroll#readme",
     "devDependencies": {
+        "@types/chai": "^4.3.5",
+        "@types/mocha": "^10.0.1",
         "@types/node": "^20.4.2",
+        "@types/sinon": "^10.0.15",
+        "chai": "^4.3.7",
+        "mocha": "^10.2.0",
+        "sinon": "^15.2.0",
         "typescript": "^5.1.6"
     },
     "dependencies": {
-        "wrap-ansi": "^8.1.0"
+        "wrap-ansi": "^7.0.0"
     }
 }
