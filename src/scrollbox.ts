@@ -76,13 +76,6 @@ export class ScrollBox {
 
     scroll(lines: number): this {
         this.currentLine += lines;
-
-        if (this.currentLine < 0) {
-            this.currentLine = 0;
-        } else if (this.currentLine > this.lines.length - 1) {
-            this.currentLine = this.lines.length - 1;
-        }
-
         return this;
     }
 
