@@ -1,5 +1,5 @@
 import { emitKeypressEvents } from 'node:readline';
-import { ScrollBox } from './index';
+import { ScrollBox } from '../src/index';
 
 console.clear();
 

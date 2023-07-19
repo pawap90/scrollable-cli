@@ -2,8 +2,8 @@
     "name": "cli-scroll",
     "version": "0.1.0",
     "description": "Terminal string scrolling with ANSI wordwrap support",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "main": "build/dist/index.js",
+    "types": "build/dist/index.d.ts",
     "files": [
         "dist/**/*"
     ],

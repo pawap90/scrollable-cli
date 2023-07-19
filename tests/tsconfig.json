@@ -2,7 +2,7 @@
     "extends": "../tsconfig.json",
 
     "compilerOptions": {
-        "outDir": "../build-tests",
+        "outDir": "../build/test",
         "rootDir": "../",
         "rootDirs": [
             "../src",

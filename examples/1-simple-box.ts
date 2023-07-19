@@ -1,11 +1,11 @@
 import { setTimeout } from 'timers/promises';
-import { ScrollBox } from './scrollbox';
+import ScrollBox from '../src/index';
 
 const content =
     'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua';
 const start = { x: 10, y: 3 };
 const size = { width: 20, height: 5 };
-const scrollBox = new ScrollBox({ content, start, size });
+const scrollBox = ScrollBox({ content, start, size });
 
 console.clear();
 
