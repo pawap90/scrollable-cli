@@ -4,7 +4,7 @@ import wrapAnsi from 'wrap-ansi';
 export type ScrollBoxOptions = {
     content?: string;
     start: { x: number; y: number };
-    container: { width: number; height: number };
+    size: { width: number; height: number };
     wrapOptions: WrapOptions;
 };
 
@@ -23,9 +23,9 @@ export class ScrollBox {
                 x: options?.start?.x ?? 0,
                 y: options?.start?.y ?? 0
             },
-            container: {
-                width: options?.container?.width ?? process.stdout.columns,
-                height: options?.container?.height ?? process.stdout.rows
+            size: {
+                width: options?.size?.width ?? process.stdout.columns,
+                height: options?.size?.height ?? process.stdout.rows
             },
             wrapOptions: {
                 hard: options?.wrapOptions?.hard ?? false,
@@ -47,8 +47,8 @@ export class ScrollBox {
         return this;
     }
 
-    setContainer(container: { width: number; height: number }): this {
-        this._options.container = container;
+    setSize(size: { width: number; height: number }): this {
+        this._options.size = size;
         this.resetLines();
         return this;
     }
@@ -62,7 +62,7 @@ export class ScrollBox {
     print(): this {
         if (this.lines.length == 0) this.splitContentIntoLines();
         const { x, y } = this._options.start;
-        const { height } = this._options.container;
+        const { height } = this._options.size;
 
         process.stdout.cursorTo(x, y);
         for (let i = 0; i < height - 1; i++) {
@@ -96,14 +96,14 @@ export class ScrollBox {
 
         const wrapped = wrapAnsi(
             this._options.content,
-            this._options.container.width,
+            this._options.size.width,
             this._options.wrapOptions
         );
         this.lines = wrapped.split('\n');
     }
 
     private printLine(line?: string): void {
-        if (line == undefined) console.log(Array(this._options.container.width).fill(' ').join(''));
-        else console.log(line.padEnd(this._options.container.width, ' '));
+        if (line == undefined) console.log(Array(this._options.size.width).fill(' ').join(''));
+        else console.log(line.padEnd(this._options.size.width, ' '));
     }
 }

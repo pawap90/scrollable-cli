@@ -13,15 +13,15 @@ const asciiCow = `
      (\`_\`)
 `;
 
-const container = { width: 16, height: 6 };
+const size = { width: 16, height: 6 };
 const catBox = new ScrollBox({
     content: asciiCat,
     start: { x: 2, y: 3 },
-    container,
+    size,
     wrapOptions: { trim: false }
 });
 
-const cowBox = new ScrollBox({ content: asciiCow, start: { x: 20, y: 3 }, container, wrapOptions: { trim: false } });
+const cowBox = new ScrollBox({ content: asciiCow, start: { x: 20, y: 3 }, size, wrapOptions: { trim: false } });
 
 console.clear();
 

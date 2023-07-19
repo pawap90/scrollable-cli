@@ -5,7 +5,7 @@ import { ScrollBox as ScrollBoxClass, ScrollBoxOptions } from '../src/index';
 const defaultOptions: ScrollBoxOptions = {
     content: undefined,
     start: { x: 0, y: 0 },
-    container: { width: process.stdout.columns, height: process.stdout.rows },
+    size: { width: process.stdout.columns, height: process.stdout.rows },
     wrapOptions: { hard: false, wordWrap: true, trim: true }
 };
 
@@ -23,7 +23,7 @@ describe('ScrollBox initialization', () => {
             const options: ScrollBoxOptions = {
                 content: 'Lorem ipsum dolor sit amet',
                 start: { x: 2, y: 3 },
-                container: { width: 20, height: 10 },
+                size: { width: 20, height: 10 },
                 wrapOptions: { hard: false, wordWrap: false, trim: true }
             };
             const scrollBox = new ScrollBoxClass(options);
@@ -49,7 +49,7 @@ describe('ScrollBox initialization', () => {
             const options: ScrollBoxOptions = {
                 content: 'Lorem ipsum dolor sit amet',
                 start: { x: 2, y: 3 },
-                container: { width: 20, height: 10 },
+                size: { width: 20, height: 10 },
                 wrapOptions: { hard: false, wordWrap: false, trim: true }
             };
             const scrollBox = ScrollBox(options);
