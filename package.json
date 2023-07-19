@@ -10,7 +10,8 @@
     "scripts": {
         "build": "tsc",
         "pretest": "tsc -p tests",
-        "test": "mocha"
+        "test": "mocha",
+        "build:examples": "tsc -p examples"
     },
     "repository": {
         "type": "git",

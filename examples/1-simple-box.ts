@@ -1,5 +1,5 @@
 import { setTimeout } from 'timers/promises';
-import { ScrollBox } from '../src/scrollbox';
+import { ScrollBox } from './scrollbox';
 
 const content =
     'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua';
@@ -23,8 +23,9 @@ for (let i = 0; i < 10; i++) {
 
 async function autoscroll(direction: 'up' | 'down') {
     for (let i = 0; i < 8; i++) {
-        scrollBox.print();
-        scrollBox.scroll(direction == 'up' ? -1 : 1);
+        scrollBox
+            .print()
+            .scroll(direction == 'up' ? -1 : 1);
         await setTimeout(1000);
     }
 }
