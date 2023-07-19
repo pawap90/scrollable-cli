@@ -11,7 +11,9 @@
         "build": "tsc",
         "pretest": "tsc -p tests",
         "test": "mocha",
-        "build:examples": "tsc -p examples"
+        "build:examples": "tsc -p examples",
+        "example": "npm run build:examples && node build/example/examples/${npm_config_file}.js",
+        "example:win": "npm run build:examples && node build/example/examples/%npm_config_file%.js"
     },
     "repository": {
         "type": "git",
