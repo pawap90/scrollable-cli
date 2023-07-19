@@ -65,7 +65,7 @@ export class ScrollBox {
         const { height } = this._options.size;
 
         process.stdout.cursorTo(x, y);
-        for (let i = 0; i < height - 1; i++) {
+        for (let i = 0; i < height; i++) {
             const line = this.lines[i + this.currentLine];
             process.stdout.cursorTo(x);
             this.printLine(line);
