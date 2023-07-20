@@ -9,7 +9,8 @@
             "./"
         ],
         "noEmitOnError": true,
-        "declaration": false
+        "declaration": false,
+        "sourceMap": true
     },
     "include": ["./**/*", "../src/**/*"]
 }

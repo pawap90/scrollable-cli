@@ -10,7 +10,6 @@
         "rootDir": "./src",
         "outDir": "build/dist",
         "declaration": true,
-        "sourceMap": true
     },
     "include": ["src/**/*"]
 }
