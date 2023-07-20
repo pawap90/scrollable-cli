@@ -3,7 +3,7 @@ import { Scrollable } from '../src/index';
 
 console.clear();
 
-const size = { width: 15, height: 7 };
+const size = { width: 15, height: 6 };
 
 const catBox = new Scrollable({
     content: `
@@ -62,7 +62,7 @@ function printBoxBorders(box: Scrollable) {
     const { stdout } = process;
     const { size, start } = box.options;
     
-    const height = size.height + 1;
+    const height = size.height + 2;
     const width = size.width + 2;
     const x = start.x - 1;
     const y = start.y - 1;
