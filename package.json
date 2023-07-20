@@ -1,7 +1,7 @@
 {
-    "name": "cli-scroll",
+    "name": "scrollable-cli",
     "version": "0.1.0",
-    "description": "Terminal string scrolling with ANSI wordwrap support",
+    "description": "Make scrollable areas with ANSI support on the terminal.",
     "main": "build/dist/index.js",
     "types": "build/dist/index.d.ts",
     "files": [

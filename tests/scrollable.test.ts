@@ -1,23 +1,24 @@
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import src, { ScrollBox } from '../src/index';
+import { Scrollable } from '../src/index';
 
-describe('ScrollBox', () => {
-    let scrollBox: ScrollBox;
+describe('Scrollable', () => {
+    let scrollable: Scrollable;
 
     beforeEach(() => {
-        scrollBox = new ScrollBox();
+        scrollable = new Scrollable();
     });
 
     describe('print', () => {
         it('should print the content to the console', () => {
-            scrollBox.setContent('Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod')
+            scrollable
+                .setContent('Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod')
                 .setSize({ width: 12, height: 3 })
                 .setStart({ x: 2, y: 3 });
 
             const spyConsoleLog = spy(console, 'log');
 
-            scrollBox.print();
+            scrollable.print();
 
             expect(spyConsoleLog.callCount).to.equal(3);
             expect(spyConsoleLog.getCall(0).args[0]).to.equal('Lorem ipsum ');
@@ -27,7 +28,7 @@ describe('ScrollBox', () => {
         });
 
         it('should print the content considering newlines', () => {
-            scrollBox
+            scrollable
                 .setContent(
                     'Lorem \nipsum dolor sit\n amet consectetur adipiscing elit sed do eiusmod'
                 )
@@ -35,7 +36,7 @@ describe('ScrollBox', () => {
 
             const spyConsoleLog = spy(console, 'log');
 
-            scrollBox.print();
+            scrollable.print();
 
             expect(spyConsoleLog.callCount).to.equal(3);
             expect(spyConsoleLog.getCall(0).args[0]).to.equal('Lorem       ');
@@ -45,7 +46,7 @@ describe('ScrollBox', () => {
         });
 
         it('should print the content considering ANSI codes', () => {
-            scrollBox
+            scrollable
                 .setContent(
                     //       ┌─────────red────────┐
                     '\x1b[31mLorem ipsum dolor sit\x1b[0m amet consectetur adipiscing elit sed do eiusmod'
@@ -54,7 +55,7 @@ describe('ScrollBox', () => {
 
             const spyConsoleLog = spy(console, 'log');
 
-            scrollBox.print();
+            scrollable.print();
 
             expect(spyConsoleLog.callCount).to.equal(4);
             expect(spyConsoleLog.getCall(0).args[0]).to.equal('\x1b[31mLorem ipsum\u001b[39m');
@@ -67,30 +68,29 @@ describe('ScrollBox', () => {
 
     describe('scroll', () => {
         it('should scroll the content up by the given number of lines', () => {
-            scrollBox.setContent(
+            scrollable.setContent(
                 'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod'
             );
 
-            scrollBox.scroll(1);
-            expect(scrollBox['currentLine']).to.equal(1);
+            scrollable.scroll(1);
+            expect(scrollable['currentLine']).to.equal(1);
 
-            scrollBox.scroll(-2);
-            expect(scrollBox['currentLine']).to.equal(-1);
+            scrollable.scroll(-2);
+            expect(scrollable['currentLine']).to.equal(-1);
 
-            scrollBox.scroll(5);
-            expect(scrollBox['currentLine']).to.equal(4);
+            scrollable.scroll(5);
+            expect(scrollable['currentLine']).to.equal(4);
         });
 
         it('should print the correct lines after scrolling down', () => {
-            scrollBox.setContent('Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod')
+            scrollable
+                .setContent('Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod')
                 .setSize({ width: 12, height: 3 })
                 .setStart({ x: 2, y: 3 });
 
             const spyConsoleLog = spy(console, 'log');
 
-            scrollBox
-                .scroll(4)
-                .print();
+            scrollable.scroll(4).print();
 
             expect(spyConsoleLog.callCount).to.equal(3);
             expect(spyConsoleLog.getCall(0).args[0]).to.equal('adipiscing  ');
@@ -100,15 +100,14 @@ describe('ScrollBox', () => {
         });
 
         it('should print the correct lines after scrolling up', () => {
-            scrollBox.setContent('Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod')
+            scrollable
+                .setContent('Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod')
                 .setSize({ width: 12, height: 3 })
                 .setStart({ x: 2, y: 3 });
 
             const spyConsoleLog = spy(console, 'log');
 
-            scrollBox
-                .scroll(-2)
-                .print();
+            scrollable.scroll(-2).print();
 
             expect(spyConsoleLog.callCount).to.equal(3);
             expect(spyConsoleLog.getCall(0).args[0]).to.equal('            ');
@@ -118,23 +117,20 @@ describe('ScrollBox', () => {
         });
 
         it('should print the correct lines after scrolling up and down', () => {
-            scrollBox.setContent('Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod')
+            scrollable
+                .setContent('Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod')
                 .setSize({ width: 12, height: 3 })
                 .setStart({ x: 2, y: 3 });
 
             const spyConsoleLog = spy(console, 'log');
 
-            scrollBox
-                .scroll(5)
-                .print();
+            scrollable.scroll(5).print();
 
             expect(spyConsoleLog.getCall(0).args[0]).to.equal('elit sed do ');
             expect(spyConsoleLog.getCall(1).args[0]).to.equal('eiusmod     ');
             expect(spyConsoleLog.getCall(2).args[0]).to.equal('            ');
 
-            scrollBox
-                .scroll(-2)
-                .print();
+            scrollable.scroll(-2).print();
 
             expect(spyConsoleLog.callCount).to.equal(6);
             expect(spyConsoleLog.getCall(3).args[0]).to.equal('consectetur ');

@@ -1,4 +1,4 @@
-import { type ScrollBoxOptions, ScrollBox } from './scrollbox';
+import { type ScrollableOptions, Scrollable } from './scrollable';
 
-export default (options?: Partial<ScrollBoxOptions>) => new ScrollBox(options);
-export { ScrollBox, ScrollBoxOptions };
+export default (options?: Partial<ScrollableOptions>) => new Scrollable(options);
+export { Scrollable, ScrollableOptions };

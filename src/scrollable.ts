@@ -1,22 +1,22 @@
 import { type Options as WrapOptions } from 'wrap-ansi';
 import wrapAnsi from 'wrap-ansi';
 
-export type ScrollBoxOptions = {
+export type ScrollableOptions = {
     content?: string;
     start: { x: number; y: number };
     size: { width: number; height: number };
     wrapOptions: WrapOptions;
 };
 
-export class ScrollBox {
+export class Scrollable {
     private lines: string[] = [];
     private currentLine = 0;
-    private _options: ScrollBoxOptions;
-    get options(): ScrollBoxOptions {
+    private _options: ScrollableOptions;
+    get options(): ScrollableOptions {
         return this._options;
     }
 
-    constructor(options?: Partial<ScrollBoxOptions>) {
+    constructor(options?: Partial<ScrollableOptions>) {
         this._options = {
             content: options?.content,
             start: {

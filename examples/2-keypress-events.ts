@@ -1,11 +1,11 @@
 import { emitKeypressEvents } from 'node:readline';
-import { ScrollBox } from '../src/index';
+import { Scrollable } from '../src/index';
 
 console.clear();
 
 const size = { width: 15, height: 7 };
 
-const catBox = new ScrollBox({
+const catBox = new Scrollable({
     content: `
      /\\_/\\
     ( o.o )
@@ -17,7 +17,7 @@ const catBox = new ScrollBox({
     .scroll(-1) // Center vertically.
     .print();
 
-const cowBox = new ScrollBox({
+const cowBox = new Scrollable({
     content: `
     ((...))
     ( O O )
@@ -58,7 +58,7 @@ process.stdin.on('keypress', (str, key) => {
     }
 });
 
-function printBoxBorders(box: ScrollBox) {
+function printBoxBorders(box: Scrollable) {
     const { stdout } = process;
     const { size, start } = box.options;
     

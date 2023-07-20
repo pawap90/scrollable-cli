@@ -1,7 +1,7 @@
 import { setTimeout } from 'timers/promises';
-import ScrollBox from '../src/index';
+import Scrollable from '../src/index';
 
-const scrollBox = ScrollBox()
+const box = Scrollable()
     .setContent(
         'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua'
     )
@@ -19,12 +19,12 @@ for (let i = 0; i < 10; i++) {
     await autoscroll('down');
     await autoscroll('up');
 
-    process.stdout.cursorTo(0, 10);
+    process.stdout.cursorTo(0, 11);
 })();
 
 async function autoscroll(direction: 'up' | 'down') {
     for (let i = 0; i < 8; i++) {
-        scrollBox.print().scroll(direction == 'up' ? -1 : 1);
+        box.print().scroll(direction == 'up' ? -1 : 1);
         await setTimeout(1000);
     }
 }
