@@ -1,4 +1,10 @@
-Scrollable boxes for the terminal with ANSI wordwrap support.
+Make scrollable areas with ANSI support on the terminal.
+
+## Usage
+
+```ts
+
+```
 
 ## Examples
 
