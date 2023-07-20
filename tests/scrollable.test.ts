@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { spy } from 'sinon';
+import { spy, SinonSpy } from 'sinon';
 import { Scrollable } from '../src/index';
 
 describe('Scrollable', () => {
@@ -58,7 +58,7 @@ describe('Scrollable', () => {
             scrollable.print();
 
             expect(spyConsoleLog.callCount).to.equal(4);
-            expect(spyConsoleLog.getCall(0).args[0]).to.equal('\x1b[31mLorem ipsum\u001b[39m');
+            expect(spyConsoleLog.getCall(0).args[0]).to.equal('\x1b[31mLorem ipsum\u001b[39m   ');
             expect(spyConsoleLog.getCall(1).args[0]).to.equal('\u001b[31mdolor sit\u001b[0m amet');
             expect(spyConsoleLog.getCall(2).args[0]).to.equal('consectetur   ');
             expect(spyConsoleLog.getCall(3).args[0]).to.equal('adipiscing    ');

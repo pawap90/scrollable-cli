@@ -1,3 +1,4 @@
+import stripAnsi from 'strip-ansi';
 import { type Options as WrapOptions } from 'wrap-ansi';
 import wrapAnsi from 'wrap-ansi';
 
@@ -97,6 +98,14 @@ export class Scrollable {
 
     private printLine(line?: string): void {
         if (line == undefined) console.log(Array(this._options.size.width).fill(' ').join(''));
-        else console.log(line.padEnd(this._options.size.width, ' '));
+        else {
+            const length = stripAnsi(line).length;
+            if (length < this._options.size.width) {
+                line += Array(this._options.size.width - length)
+                    .fill(' ')
+                    .join('');
+            }
+            console.log(line);
+        }
     }
 }
