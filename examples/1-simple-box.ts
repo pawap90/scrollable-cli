@@ -17,7 +17,7 @@ const box = Scrollable()
         | o_o |
         `)
     )
-    .setStart({ x: 12, y: 3 })
+    .setStart({ x: 10, y: 3 })
     .setSize({ width: 22, height: 4 })
     .setWrapOptions({ trim: false, hard: false, wordWrap: true })
     .print();
