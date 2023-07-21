@@ -1,4 +1,4 @@
-Make scrollable areas with ANSI support on the terminal.
+Create independent scrollable areas with ANSI support in the terminal.
 
 ## Install
 

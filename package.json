@@ -1,7 +1,7 @@
 {
     "name": "scrollable-cli",
-    "version": "0.1.0",
-    "description": "Make scrollable areas with ANSI support on the terminal.",
+    "version": "1.0.0",
+    "description": "Create independent scrollable areas in the terminal.",
     "main": "build/dist/index.js",
     "types": "build/dist/index.d.ts",
     "files": [
