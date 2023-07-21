@@ -1,4 +1,3 @@
-import stripAnsi from 'strip-ansi';
 import { type Options as WrapOptions } from 'wrap-ansi';
 import wrapAnsi from 'wrap-ansi';
 
@@ -63,13 +62,18 @@ export class Scrollable {
     print(): this {
         if (this.lines.length == 0) this.splitContentIntoLines();
         const { x, y } = this._options.start;
-        const { height } = this._options.size;
+        const { width, height } = this._options.size;
+        const emptyLine = Array(width).fill(' ').join('');
+
+        // Clear the area.
+        this.clear();
 
         process.stdout.cursorTo(x, y);
         for (let i = 0; i < height; i++) {
             const line = this.lines[i + this.currentLine];
             process.stdout.cursorTo(x);
-            this.printLine(line);
+            
+            console.log(line ?? emptyLine);
         }
 
         return this;
@@ -77,6 +81,20 @@ export class Scrollable {
 
     scroll(lines: number): this {
         this.currentLine += lines;
+        return this;
+    }
+
+    clear(): this {
+        const { x, y } = this._options.start;
+        const { width, height } = this._options.size;
+        const emptyLine = Array(width).fill(' ').join('');
+        process.stdout.cursorTo(x, y);
+
+        for (let i = 0; i < height; i++) {
+            process.stdout.cursorTo(x);
+            console.log(emptyLine);
+        }
+
         return this;
     }
 
@@ -94,18 +112,5 @@ export class Scrollable {
             this._options.wrapOptions
         );
         this.lines = wrapped.split('\n');
-    }
-
-    private printLine(line?: string): void {
-        if (line == undefined) console.log(Array(this._options.size.width).fill(' ').join(''));
-        else {
-            const length = stripAnsi(line).length;
-            if (length < this._options.size.width) {
-                line += Array(this._options.size.width - length)
-                    .fill(' ')
-                    .join('');
-            }
-            console.log(line);
-        }
     }
 }
