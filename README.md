@@ -8,7 +8,7 @@ npm install scrollable-cli
 
 ## Usage
 
-Create a scrollable area with a content and print it:
+Create a scrollable area with content and print it:
 
 ```ts
 import Scrollable from 'scrollable-cli';
