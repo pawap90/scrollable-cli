@@ -15,7 +15,8 @@ import Scrollable from 'scrollable-cli';
 
 const box = Scrollable({
     content:
-        "Lorem ipsum is boring but I couldn't think of anything else, so here's a yellow cat:" +
+        "Lorem ipsum is boring but I couldn't think " +
+        "of anything else, so here's a yellow cat:" +
         chalk.yellow(`
         |\\---/|
         | o_o |
