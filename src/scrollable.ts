@@ -31,7 +31,7 @@ export type ScrollableOptions = {
 };
 
 /**
- * A class for creating a scrollable area in the console.
+ * A scrollable area that can be printed to the console. 
  */
 export class Scrollable {
     private lines: string[] = [];
