@@ -21,7 +21,20 @@
         "type": "git",
         "url": "git+https://github.com/pawap90/scrollable-cli.git"
     },
-    "keywords": [],
+    "keywords": [
+        "terminal",
+		"scroll",
+        "scroller",
+		"console",
+		"cli",
+		"string",
+		"ansi",
+		"formatting",
+		"log",
+		"logging",
+		"command line",
+		"text"
+	],
     "author": "Paula Santamaría",
     "license": "MIT",
     "bugs": {
