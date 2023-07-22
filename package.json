@@ -1,6 +1,6 @@
 {
     "name": "scrollable-cli",
-    "version": "1.0.0-rc1",
+    "version": "1.0.0",
     "description": "Create independent scrollable areas in the terminal.",
     "main": "build/dist/index.js",
     "types": "build/dist/index.d.ts",
