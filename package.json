@@ -1,6 +1,6 @@
 {
     "name": "scrollable-cli",
-    "version": "1.0.0",
+    "version": "1.0.0-rc1",
     "description": "Create independent scrollable areas in the terminal.",
     "main": "build/dist/index.js",
     "types": "build/dist/index.d.ts",
@@ -11,21 +11,23 @@
         "build": "tsc",
         "pretest": "tsc -p tests",
         "test": "mocha",
+        "prepack": "npm run build",
+        "pack": "npm pack",
         "build:examples": "tsc -p examples",
         "example": "npm run build:examples && node build/example/examples/${npm_config_file}.js",
         "example:win": "npm run build:examples && node build/example/examples/%npm_config_file%.js"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/pawap90/cli-scroll.git"
+        "url": "git+https://github.com/pawap90/scrollable-cli.git"
     },
     "keywords": [],
     "author": "Paula Santamaría",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/pawap90/cli-scroll/issues"
+        "url": "https://github.com/pawap90/scrollable-cli/issues"
     },
-    "homepage": "https://github.com/pawap90/cli-scroll#readme",
+    "homepage": "https://github.com/pawap90/scrollable-cli#readme",
     "devDependencies": {
         "@types/chai": "^4.3.5",
         "@types/mocha": "^10.0.1",
@@ -39,5 +41,8 @@
     },
     "dependencies": {
         "wrap-ansi": "^7.0.0"
-    }
+    },
+    "engines": {
+		"node": ">=10"
+	}
 }
