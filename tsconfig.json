@@ -8,7 +8,7 @@
         "skipLibCheck": true,
 
         "rootDir": "./src",
-        "outDir": "build/dist",
+        "outDir": "dist",
         "declaration": true,
     },
     "include": ["src/**/*"]
