@@ -2,12 +2,13 @@
     "name": "scrollable-cli",
     "version": "1.0.0",
     "description": "Create independent scrollable areas in the terminal.",
-    "main": "build/dist/index.js",
-    "types": "build/dist/index.d.ts",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "files": [
-        "build/dist/**/*"
+        "dist/**/*"
     ],
     "scripts": {
+        "prebuild": "shx rm -rf dist",
         "build": "tsc",
         "pretest": "tsc -p tests",
         "test": "mocha",
@@ -23,18 +24,18 @@
     },
     "keywords": [
         "terminal",
-		"scroll",
+        "scroll",
         "scroller",
-		"console",
-		"cli",
-		"string",
-		"ansi",
-		"formatting",
-		"log",
-		"logging",
-		"command line",
-		"text"
-	],
+        "console",
+        "cli",
+        "string",
+        "ansi",
+        "formatting",
+        "log",
+        "logging",
+        "command line",
+        "text"
+    ],
     "author": "Paula Santamaría",
     "license": "MIT",
     "bugs": {
@@ -49,6 +50,7 @@
         "chai": "^4.3.7",
         "chalk": "^4.1.2",
         "mocha": "^10.2.0",
+        "shx": "^0.3.4",
         "sinon": "^15.2.0",
         "typescript": "^5.1.6"
     },
@@ -56,6 +58,6 @@
         "wrap-ansi": "^7.0.0"
     },
     "engines": {
-		"node": ">=10"
-	}
+        "node": ">=10"
+    }
 }
