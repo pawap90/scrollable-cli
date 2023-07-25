@@ -1,3 +1,5 @@
+[![](https://img.shields.io/npm/v/scrollable-cli.svg)](https://www.npmjs.com/package/scrollable-cli)
+
 Create independent scrollable areas with ANSI support in the terminal.
 
 ![3 scrollable areas controller by the arrow keys](https://github.com/pawap90/scrollable-cli/assets/2507959/c9f34db9-65b0-4629-8ebc-cd840f729c21)
@@ -74,6 +76,20 @@ process.stdin.on('keypress', (str, key) => {
 ![a single scrollable area with text and ansi codes](https://github.com/pawap90/scrollable-cli/assets/2507959/db063b13-0777-428d-831c-73be5ba55fd0)
 
 ## Examples
+
+1. Clone the repo:
+
+```sh
+git clone https://github.com/pawap90/scrollable-cli.git
+```
+
+2. Install dependencies:
+
+```sh
+npm install
+```
+
+3. Run the examples:
 
 ```sh
 npm run example --file=<example-file-name>
