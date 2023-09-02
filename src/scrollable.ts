@@ -5,33 +5,39 @@ import wrapAnsi from 'wrap-ansi';
  * Options for the Scrollable class.
  */
 export type ScrollableOptions = {
-    /** 
-     * The content to display in the scrollable area. 
+    /**
+     * The content to display in the scrollable area.
      * @default undefined
      */
     content?: string;
 
-    /** 
-     * The starting position of the scrollable area. 
+    /**
+     * The starting position of the scrollable area.
      * @default { x: 0, y: 0 }
      */
     start: { x: number; y: number };
 
-    /** 
-     * The size of the scrollable area. 
+    /**
+     * The size of the scrollable area.
      * @default { width: process.stdout.columns, height: process.stdout.rows }
      */
     size: { width: number; height: number };
-    
-    /** 
-     * Options for wrapping the content in the scrollable area. 
+
+    /**
+     * Options for wrapping the content in the scrollable area.
      * @default { hard: false, wordWrap: true, trim: true }
      */
     wrapOptions: WrapOptions;
+
+    /**
+     * The stream to write to.
+     * @default process.stdout
+     */
+    stdout: NodeJS.WriteStream;
 };
 
 /**
- * A scrollable area that can be printed to the console. 
+ * A scrollable area that can be printed to the console.
  */
 export class Scrollable {
     private lines: string[] = [];
@@ -56,9 +62,16 @@ export class Scrollable {
                 x: options?.start?.x ?? 0,
                 y: options?.start?.y ?? 0
             },
+            stdout: options?.stdout ?? process.stdout,
             size: {
-                width: options?.size?.width ?? process.stdout.columns,
-                height: options?.size?.height ?? process.stdout.rows
+                width:
+                    options?.size?.width ??
+                    options?.stdout?.columns ??
+                    process.stdout.columns,
+                height:
+                    options?.size?.height ??
+                    options?.stdout?.rows ??
+                    process.stdout.rows
             },
             wrapOptions: {
                 hard: options?.wrapOptions?.hard ?? false,
@@ -121,16 +134,18 @@ export class Scrollable {
         const { x, y } = this._options.start;
         const { width, height } = this._options.size;
         const emptyLine = Array(width).fill(' ').join('');
+        const { stdout } = this._options;
 
         // Clear the area.
         this.clear();
 
-        process.stdout.cursorTo(x, y);
+        stdout.cursorTo(x, y);
         for (let i = 0; i < height; i++) {
             const line = this.lines[i + this.currentLine];
-            process.stdout.cursorTo(x);
-            
-            console.log(line ?? emptyLine);
+            stdout.cursorTo(x);
+
+            stdout.write(line ?? emptyLine);
+            stdout.write('\n');
         }
 
         return this;
@@ -154,11 +169,13 @@ export class Scrollable {
         const { x, y } = this._options.start;
         const { width, height } = this._options.size;
         const emptyLine = Array(width).fill(' ').join('');
-        process.stdout.cursorTo(x, y);
+        const { stdout } = this._options;
+        stdout.cursorTo(x, y);
 
         for (let i = 0; i < height; i++) {
-            process.stdout.cursorTo(x);
-            console.log(emptyLine);
+            stdout.cursorTo(x);
+            stdout.write(emptyLine);
+            stdout.write('\n');
         }
 
         return this;
