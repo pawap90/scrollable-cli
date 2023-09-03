@@ -6,18 +6,18 @@ describe('Scrollable', () => {
     let scrollable: Scrollable;
 
     beforeEach(() => {
-        scrollable = new Scrollable();
+        scrollable = new Scrollable({ stdout: createFakeStdout() });
     });
 
     describe('print', () => {
-        let spyConsoleLog: SinonSpy;
+        let spyWrite: SinonSpy;
 
         beforeEach(() => {
-            spyConsoleLog = spy(console, 'log');
+            spyWrite = spy(scrollable.options.stdout, 'write');
         });
 
         afterEach(() => {
-            spyConsoleLog.restore();
+            spyWrite.restore();
         });
 
         it('should print the content to the console', () => {
@@ -26,17 +26,17 @@ describe('Scrollable', () => {
                 .setSize({ width: 12, height: 3 })
                 .setStart({ x: 2, y: 3 });
 
-            const emptyLine = '            ';
+            const emptyLine = '            \n';
 
             scrollable.print();
 
-            expect(spyConsoleLog.callCount).to.equal(6);
-            expect(spyConsoleLog.getCall(0).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(1).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(2).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(3).args[0]).to.equal('Lorem ipsum');
-            expect(spyConsoleLog.getCall(4).args[0]).to.equal('dolor sit');
-            expect(spyConsoleLog.getCall(5).args[0]).to.equal('amet');
+            expect(spyWrite.callCount).to.equal(6);
+            expect(spyWrite.getCall(0).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(1).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(2).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(3).args[0]).to.equal('Lorem ipsum\n');
+            expect(spyWrite.getCall(4).args[0]).to.equal('dolor sit\n');
+            expect(spyWrite.getCall(5).args[0]).to.equal('amet\n');
         });
 
         it('should print the content considering newlines', () => {
@@ -46,18 +46,18 @@ describe('Scrollable', () => {
                 )
                 .setSize({ width: 12, height: 3 });
 
-            const emptyLine = '            ';
+            const emptyLine = '            \n';
 
             scrollable.print();
 
-            expect(spyConsoleLog.callCount).to.equal(6);
-            expect(spyConsoleLog.getCall(0).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(1).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(2).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(3).args[0]).to.equal('Lorem');
-            expect(spyConsoleLog.getCall(4).args[0]).to.equal('ipsum dolor');
-            expect(spyConsoleLog.getCall(5).args[0]).to.equal('sit');
-            spyConsoleLog.restore();
+            expect(spyWrite.callCount).to.equal(6);
+            
+            expect(spyWrite.getCall(0).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(1).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(2).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(3).args[0]).to.equal('Lorem\n');
+            expect(spyWrite.getCall(4).args[0]).to.equal('ipsum dolor\n');
+            expect(spyWrite.getCall(5).args[0]).to.equal('sit\n');
         });
 
         it('should print the content considering ANSI codes', () => {
@@ -68,31 +68,30 @@ describe('Scrollable', () => {
                 )
                 .setSize({ width: 14, height: 4 });
 
-            const emptyLine = '              ';
+            const emptyLine = '              \n';
             scrollable.print();
 
-            expect(spyConsoleLog.callCount).to.equal(8);
-            expect(spyConsoleLog.getCall(0).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(1).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(2).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(3).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(4).args[0]).to.equal('\x1b[31mLorem ipsum\u001b[39m');
-            expect(spyConsoleLog.getCall(5).args[0]).to.equal('\u001b[31mdolor sit\u001b[0m amet');
-            expect(spyConsoleLog.getCall(6).args[0]).to.equal('consectetur');
-            expect(spyConsoleLog.getCall(7).args[0]).to.equal('adipiscing');
-            spyConsoleLog.restore();
+            expect(spyWrite.callCount).to.equal(8);
+            expect(spyWrite.getCall(0).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(1).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(2).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(3).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(4).args[0]).to.equal('\x1b[31mLorem ipsum\u001b[39m\n');
+            expect(spyWrite.getCall(5).args[0]).to.equal('\u001b[31mdolor sit\u001b[0m amet\n');
+            expect(spyWrite.getCall(6).args[0]).to.equal('consectetur\n');
+            expect(spyWrite.getCall(7).args[0]).to.equal('adipiscing\n');
         });
     });
 
     describe('scroll', () => {
-        let spyConsoleLog: SinonSpy;
+        let spyWrite: SinonSpy;
 
         beforeEach(() => {
-            spyConsoleLog = spy(console, 'log');
+            spyWrite = spy(scrollable.options.stdout, 'write');
         });
 
         afterEach(() => {
-            spyConsoleLog.restore();
+            spyWrite.restore();
         });
 
         it('should scroll the content up by the given number of lines', () => {
@@ -116,16 +115,16 @@ describe('Scrollable', () => {
                 .setSize({ width: 12, height: 3 })
                 .setStart({ x: 2, y: 3 });
 
-            const emptyLine = '            ';
+            const emptyLine = '            \n';
             scrollable.scroll(4).print();
 
-            expect(spyConsoleLog.callCount).to.equal(6);
-            expect(spyConsoleLog.getCall(0).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(1).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(2).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(3).args[0]).to.equal('adipiscing');
-            expect(spyConsoleLog.getCall(4).args[0]).to.equal('elit sed do');
-            expect(spyConsoleLog.getCall(5).args[0]).to.equal('eiusmod');
+            expect(spyWrite.callCount).to.equal(6);
+            expect(spyWrite.getCall(0).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(1).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(2).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(3).args[0]).to.equal('adipiscing\n');
+            expect(spyWrite.getCall(4).args[0]).to.equal('elit sed do\n');
+            expect(spyWrite.getCall(5).args[0]).to.equal('eiusmod\n');
         });
 
         it('should print the correct lines after scrolling up', () => {
@@ -134,16 +133,16 @@ describe('Scrollable', () => {
                 .setSize({ width: 12, height: 3 })
                 .setStart({ x: 2, y: 3 });
 
-            const emptyLine = '            ';
+            const emptyLine = '            \n';
             scrollable.scroll(-2).print();
 
-            expect(spyConsoleLog.callCount).to.equal(6); 
-            expect(spyConsoleLog.getCall(0).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(1).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(2).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(3).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(4).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(5).args[0]).to.equal('Lorem ipsum');
+            expect(spyWrite.callCount).to.equal(6);
+            expect(spyWrite.getCall(0).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(1).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(2).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(3).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(4).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(5).args[0]).to.equal('Lorem ipsum\n');
         });
 
         it('should print the correct lines after scrolling up and down', () => {
@@ -152,39 +151,39 @@ describe('Scrollable', () => {
                 .setSize({ width: 12, height: 3 })
                 .setStart({ x: 2, y: 3 });
 
-            const emptyLine = '            ';
+            const emptyLine = '            \n';
             scrollable.scroll(5).print();
 
-            expect(spyConsoleLog.getCall(0).args[0]).to.equal(emptyLine);       // 
-            expect(spyConsoleLog.getCall(1).args[0]).to.equal(emptyLine);       // Clear the area.
-            expect(spyConsoleLog.getCall(2).args[0]).to.equal(emptyLine);       //
+            expect(spyWrite.getCall(0).args[0]).to.equal(emptyLine);       //
+            expect(spyWrite.getCall(1).args[0]).to.equal(emptyLine);       // Clear the area.
+            expect(spyWrite.getCall(2).args[0]).to.equal(emptyLine);       //
 
-            expect(spyConsoleLog.getCall(3).args[0]).to.equal('elit sed do');   //
-            expect(spyConsoleLog.getCall(4).args[0]).to.equal('eiusmod');       // Print the content.
-            expect(spyConsoleLog.getCall(5).args[0]).to.equal(emptyLine);       //
+            expect(spyWrite.getCall(3).args[0]).to.equal('elit sed do\n');   //
+            expect(spyWrite.getCall(4).args[0]).to.equal('eiusmod\n');       // Print the content.
+            expect(spyWrite.getCall(5).args[0]).to.equal(emptyLine);       //
 
             scrollable.scroll(-2).print();
 
-            expect(spyConsoleLog.callCount).to.equal(12);
-            expect(spyConsoleLog.getCall(6).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(7).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(8).args[0]).to.equal(emptyLine);
-            
-            expect(spyConsoleLog.getCall(9).args[0]).to.equal('consectetur');
-            expect(spyConsoleLog.getCall(10).args[0]).to.equal('adipiscing');
-            expect(spyConsoleLog.getCall(11).args[0]).to.equal('elit sed do');
+            expect(spyWrite.callCount).to.equal(12);
+            expect(spyWrite.getCall(6).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(7).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(8).args[0]).to.equal(emptyLine);
+
+            expect(spyWrite.getCall(9).args[0]).to.equal('consectetur\n');
+            expect(spyWrite.getCall(10).args[0]).to.equal('adipiscing\n');
+            expect(spyWrite.getCall(11).args[0]).to.equal('elit sed do\n');
         });
     });
 
     describe('clear', () => {
-        let spyConsoleLog: SinonSpy;
+        let spyWrite: SinonSpy;
 
         beforeEach(() => {
-            spyConsoleLog = spy(console, 'log');
+            spyWrite = spy(scrollable.options.stdout, 'write');
         });
 
         afterEach(() => {
-            spyConsoleLog.restore();
+            spyWrite.restore();
         });
 
         it('should clear the area', () => {
@@ -193,23 +192,36 @@ describe('Scrollable', () => {
                 .setSize({ width: 12, height: 3 })
                 .setStart({ x: 2, y: 3 });
 
-            const emptyLine = '            ';
+            const emptyLine = '            \n';
             scrollable.print();
 
-            expect(spyConsoleLog.callCount).to.equal(6);
-            expect(spyConsoleLog.getCall(0).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(1).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(2).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(3).args[0]).to.equal('Lorem ipsum');
-            expect(spyConsoleLog.getCall(4).args[0]).to.equal('dolor sit');
-            expect(spyConsoleLog.getCall(5).args[0]).to.equal('amet');
+            expect(spyWrite.callCount).to.equal(6);
+            expect(spyWrite.getCall(0).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(1).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(2).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(3).args[0]).to.equal('Lorem ipsum\n');
+            expect(spyWrite.getCall(4).args[0]).to.equal('dolor sit\n');
+            expect(spyWrite.getCall(5).args[0]).to.equal('amet\n');
 
             scrollable.clear();
 
-            expect(spyConsoleLog.callCount).to.equal(9);
-            expect(spyConsoleLog.getCall(6).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(7).args[0]).to.equal(emptyLine);
-            expect(spyConsoleLog.getCall(8).args[0]).to.equal(emptyLine);
+            expect(spyWrite.callCount).to.equal(9);
+            expect(spyWrite.getCall(6).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(7).args[0]).to.equal(emptyLine);
+            expect(spyWrite.getCall(8).args[0]).to.equal(emptyLine);
         });
     });
 });
+
+function createFakeStdout(): NodeJS.WriteStream {
+    return {
+        rows: 20,
+        columns: 40,
+        cursorTo: (x: number, y: number) => {
+            return true;
+        },
+        write: (str: string) => {
+            return true;
+        }
+    } as unknown as NodeJS.WriteStream;
+}
