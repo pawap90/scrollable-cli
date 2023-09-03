@@ -144,8 +144,7 @@ export class Scrollable {
             const line = this.lines[i + this.currentLine];
             stdout.cursorTo(x);
 
-            stdout.write(line ?? emptyLine);
-            stdout.write('\n');
+            stdout.write(line ?? emptyLine + '\n');
         }
 
         return this;
@@ -174,8 +173,7 @@ export class Scrollable {
 
         for (let i = 0; i < height; i++) {
             stdout.cursorTo(x);
-            stdout.write(emptyLine);
-            stdout.write('\n');
+            stdout.write(emptyLine + '\n');
         }
 
         return this;
