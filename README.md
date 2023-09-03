@@ -1,4 +1,4 @@
-[![](https://img.shields.io/npm/v/scrollable-cli.svg)](https://www.npmjs.com/package/scrollable-cli)
+[![](https://img.shields.io/npm/v/scrollable-cli.svg)](https://www.npmjs.com/package/scrollable-cli) [![ci](https://github.com/pawap90/scrollable-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/pawap90/scrollable-cli/actions/workflows/ci.yml)
 
 Create independent scrollable areas with ANSI support in the terminal.
 
