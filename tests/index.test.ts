@@ -6,7 +6,8 @@ const defaultOptions: ScrollableOptions = {
     content: undefined,
     start: { x: 0, y: 0 },
     size: { width: process.stdout.columns, height: process.stdout.rows },
-    wrapOptions: { hard: false, wordWrap: true, trim: true }
+    wrapOptions: { hard: false, wordWrap: true, trim: true },
+    stdout: process.stdout
 };
 
 config.truncateThreshold = 0;
@@ -24,7 +25,8 @@ describe('Scrollable initialization', () => {
                 content: 'Lorem ipsum dolor sit amet',
                 start: { x: 2, y: 3 },
                 size: { width: 20, height: 10 },
-                wrapOptions: { hard: false, wordWrap: false, trim: true }
+                wrapOptions: { hard: false, wordWrap: false, trim: true },
+                stdout: process.stdout
             };
             const scrollable = new ScrollableClass(options);
             expect(scrollable).to.be.an.instanceOf(ScrollableClass);
@@ -50,7 +52,8 @@ describe('Scrollable initialization', () => {
                 content: 'Lorem ipsum dolor sit amet',
                 start: { x: 2, y: 3 },
                 size: { width: 20, height: 10 },
-                wrapOptions: { hard: false, wordWrap: false, trim: true }
+                wrapOptions: { hard: false, wordWrap: false, trim: true },
+                stdout: process.stdout
             };
             const scrollable = Scrollable(options);
             expect(scrollable).to.be.an.instanceOf(ScrollableClass);
