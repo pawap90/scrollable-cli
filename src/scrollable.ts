@@ -41,7 +41,7 @@ export type ScrollableOptions = {
  */
 export class Scrollable {
     private _lines: string[] = [];
-    private _currentLine = 0;
+    private _position = 0;
     private _options: ScrollableOptions;
 
     /**
@@ -49,6 +49,21 @@ export class Scrollable {
      */
     get options(): ScrollableOptions {
         return this._options;
+    }
+
+    /**
+     * The lines of content in the scrollable area 
+     * wrapped according to {@link ScrollableOptions.wrapOptions} and split into an array of lines.
+     */
+    get lines(): string[] {
+        return this._lines;
+    }
+
+    /**
+     * The position of the first line to display in the scrollable area.
+     */
+    get position(): number {
+        return this._position;
     }
 
     /**
@@ -141,7 +156,7 @@ export class Scrollable {
 
         stdout.cursorTo(x, y);
         for (let i = 0; i < height; i++) {
-            const line = this._lines[i + this._currentLine];
+            const line = this._lines[i + this._position];
             stdout.cursorTo(x);
 
             stdout.write((line ?? emptyLine) + '\n');
@@ -156,7 +171,7 @@ export class Scrollable {
      * @returns The Scrollable instance.
      */
     scroll(lines: number): this {
-        this._currentLine += lines;
+        this._position += lines;
         return this;
     }
 
@@ -181,7 +196,7 @@ export class Scrollable {
 
     private resetLines(): void {
         this._lines = [];
-        this._currentLine = 0;
+        this._position = 0;
     }
 
     private splitContentIntoLines(): void {
