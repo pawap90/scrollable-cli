@@ -53,7 +53,7 @@ export class Scrollable {
 
     /**
      * The lines of content in the scrollable area 
-     * wrapped according to {@link ScrollableOptions.wrapOptions} and split into an array of lines.
+     * wrapped according to the specified {@link ScrollableOptions} and split into an array of lines.
      */
     get lines(): string[] {
         return this._lines;
