@@ -40,8 +40,8 @@ export type ScrollableOptions = {
  * A scrollable area that can be printed to the console.
  */
 export class Scrollable {
-    private lines: string[] = [];
-    private currentLine = 0;
+    private _lines: string[] = [];
+    private _currentLine = 0;
     private _options: ScrollableOptions;
 
     /**
@@ -130,7 +130,7 @@ export class Scrollable {
      * @returns The Scrollable instance.
      */
     print(): this {
-        if (this.lines.length == 0) this.splitContentIntoLines();
+        if (this._lines.length == 0) this.splitContentIntoLines();
         const { x, y } = this._options.start;
         const { width, height } = this._options.size;
         const emptyLine = Array(width).fill(' ').join('');
@@ -141,7 +141,7 @@ export class Scrollable {
 
         stdout.cursorTo(x, y);
         for (let i = 0; i < height; i++) {
-            const line = this.lines[i + this.currentLine];
+            const line = this._lines[i + this._currentLine];
             stdout.cursorTo(x);
 
             stdout.write((line ?? emptyLine) + '\n');
@@ -156,7 +156,7 @@ export class Scrollable {
      * @returns The Scrollable instance.
      */
     scroll(lines: number): this {
-        this.currentLine += lines;
+        this._currentLine += lines;
         return this;
     }
 
@@ -180,8 +180,8 @@ export class Scrollable {
     }
 
     private resetLines(): void {
-        this.lines = [];
-        this.currentLine = 0;
+        this._lines = [];
+        this._currentLine = 0;
     }
 
     private splitContentIntoLines(): void {
@@ -192,6 +192,6 @@ export class Scrollable {
             this._options.size.width,
             this._options.wrapOptions
         );
-        this.lines = wrapped.split('\n');
+        this._lines = wrapped.split('\n');
     }
 }
