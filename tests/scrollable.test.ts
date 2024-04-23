@@ -9,6 +9,70 @@ describe('Scrollable', () => {
         scrollable = new Scrollable({ stdout: createFakeStdout() });
     });
 
+    describe('get position', () => {
+        it('should return the current position of the scrollable area', () => {
+            scrollable.setContent(
+                'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod'
+            );
+
+            scrollable.scroll(1);
+            expect(scrollable.position).to.equal(1);
+
+            scrollable.scroll(-2);
+            expect(scrollable.position).to.equal(-1);
+
+            scrollable.scroll(5);
+            expect(scrollable.position).to.equal(4);
+        });
+    });
+
+    describe('get lines', () => {
+        it('should return all the lines of the content in an array', () => {
+            scrollable
+                .setContent('Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod')
+                .setSize({ width: 12, height: 3 })
+                .print();
+
+            expect(scrollable.lines).to.be.an('array').that.has.lengthOf(7);
+            expect(scrollable.lines[0]).to.equal('Lorem ipsum');
+            expect(scrollable.lines[1]).to.equal('dolor sit');
+            expect(scrollable.lines[2]).to.equal('amet');
+            expect(scrollable.lines[3]).to.equal('consectetur');
+            expect(scrollable.lines[4]).to.equal('adipiscing');
+            expect(scrollable.lines[5]).to.equal('elit sed do');
+            expect(scrollable.lines[6]).to.equal('eiusmod');           
+        });
+
+        it('should return all the lines of the content in an array considering newlines', () => {
+            scrollable
+                .setContent('Lorem \nipsum dolor sit\n amet consectetur')
+                .setSize({ width: 12, height: 3 })
+                .print();
+
+            expect(scrollable.lines).to.be.an('array').that.has.lengthOf(5);
+            expect(scrollable.lines[0]).to.equal('Lorem');
+            expect(scrollable.lines[1]).to.equal('ipsum dolor');
+            expect(scrollable.lines[2]).to.equal('sit');
+            expect(scrollable.lines[3]).to.equal('amet');
+            expect(scrollable.lines[4]).to.equal('consectetur');
+        });
+
+        it('should return all the lines of the content after scrolling', () => {
+            scrollable
+                .setContent('Lorem ipsum dolor sit amet consectetur')
+                .setSize({ width: 12, height: 3 })
+                .print();
+
+            scrollable.scroll(4);
+
+            expect(scrollable.lines).to.be.an('array').that.has.lengthOf(4);
+            expect(scrollable.lines[0]).to.equal('Lorem ipsum');
+            expect(scrollable.lines[1]).to.equal('dolor sit');
+            expect(scrollable.lines[2]).to.equal('amet');
+            expect(scrollable.lines[3]).to.equal('consectetur');
+        });
+    });
+
     describe('print', () => {
         let spyWrite: SinonSpy;
 
@@ -100,13 +164,13 @@ describe('Scrollable', () => {
             );
 
             scrollable.scroll(1);
-            expect(scrollable['currentLine']).to.equal(1);
+            expect(scrollable['_position']).to.equal(1);
 
             scrollable.scroll(-2);
-            expect(scrollable['currentLine']).to.equal(-1);
+            expect(scrollable['_position']).to.equal(-1);
 
             scrollable.scroll(5);
-            expect(scrollable['currentLine']).to.equal(4);
+            expect(scrollable['_position']).to.equal(4);
         });
 
         it('should print the correct lines after scrolling down', () => {
